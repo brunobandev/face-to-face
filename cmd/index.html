@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+
+    <div id="chat_box">
+
+    </div>
+    <form id="chat_form">
+        <input type="text" id="chat_message">
+        <button type="submit">Enviar</button>
+    </form>
+    
+<script>
+    window.addEventListener("load", function () {
+        var ws = new window.WebSocket("ws://localhost:3000/ws");
+
+        var chat_form = document.getElementById("chat_form");
+        var chat_message = document.getElementById("chat_message");
+        var chat_box = document.getElementById("chat_box");
+
+        ws.onmessage = function(e) {
+            console.log(e.data)
+            chat_box.innerHTML += "<p>"+e.data+"</p>";
+        }
+
+        ws.onclose = function(e) {
+            console.log("Connection closed...");
+            chat_box.innerHTML += "<p>Connection closed...</p>";
+        }
+
+        chat_form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (!ws) {
+                return
+            }
+    
+            if (!chat_message.value) {
+                return
+            }
+    
+            ws.send(chat_message.value);
+            chat_message.value = "";
+        });
+    });
+ 
+</script>
+
+</body>
+</html>
