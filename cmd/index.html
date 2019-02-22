@@ -14,16 +14,20 @@
         <main role="main">
             <div class="container">
                 <h3>Face to face</h3>
+
+                <div id="chat_box">
+
+                </div>
                 
                 <p>Olá</p>
                 
-                <form>
+                <form id="chat_form">
                     <div class="form-row">
                         <div class="col-11">
-                            <input type="text" class="form-control" placeholder="Message">
+                            <input type="text" class="form-control" id="chat_message" placeholder="Message">
                         </div>
                         <div class="col">
-                            <button type="button" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary">Send</button>
                         </div>
                     </div>
                 </form>
@@ -49,9 +53,10 @@
                     chat_box.innerHTML += "<p>Connection closed...</p>";
                 }
         
-                chat_form.addEventListener("submit", function (event) {
-                    event.preventDefault();
-        
+                chat_form.addEventListener('submit', function(e) {
+                
+                    e.preventDefault();
+
                     if (!ws) {
                         return
                     }
